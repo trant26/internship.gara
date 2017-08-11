@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 
 //GET gara
 app.get('/', function(req, res){
-    res.send('Welcome to our gara!');
+    res.sendFile('index.html', {root: __dirname })
 });
 
 app.post('/customer', function(req, res){
