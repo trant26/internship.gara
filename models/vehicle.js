@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes){
-    var Vehicles = sequelize.define('vehicles', {
+    var Vehicle = sequelize.define('vehicles', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -31,5 +31,5 @@ module.exports = function(sequelize, DataTypes){
             allowNull: false
         }
     })
-    return Vehicles;
+    return Vehicle;
 }

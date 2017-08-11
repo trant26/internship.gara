@@ -1,22 +1,23 @@
 module.exports = function(sequelize, DataTypes){
-    return sequelize.define('options', {
+    var Salesman = sequelize.define('salesman', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
             allowNull: false
        },
-        part_name: {
+        salesman_name: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        quanity: {
-            type: DataTypes.INTEGER,
+        salesman_address: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
-        amount_sale: {
-            type: DataTypes.FLOAT,
+        salesman_phone: {
+            type: DataTypes.STRING,
             allowNull: false,
         }
     })
+    return Salesman;
 }

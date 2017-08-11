@@ -17,21 +17,22 @@ if (env === 'production'){
 var db = {};
 
 db.customer = sequelize.import(__dirname + '/models/customer.js');
-db.saler = sequelize.import(__dirname + '/models/saler.js');
-db.menufacturer = sequelize.import(__dirname + '/models/menufacturer.js');
-db.options = sequelize.import(__dirname + '/models/options.js');
+db.salesman = sequelize.import(__dirname + '/models/salesman.js');
+db.manufacturer = sequelize.import(__dirname + '/models/manufacturer.js');
+db.option = sequelize.import(__dirname + '/models/option.js');
 db.invoice = sequelize.import(__dirname + '/models/invoice.js');
-db.vehicles = sequelize.import(__dirname + '/models/vehicles.js');
-db.invoice_options = sequelize.import(__dirname + '/models/invoice_options.js');
+db.vehicle = sequelize.import(__dirname + '/models/vehicle.js');
+db.invoice_option = sequelize.import(__dirname + '/models/invoice_option.js');
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.invoice.belongsTo(db.customer);
-db.invoice.belongsTo(db.saler);
-db.invoice.belongsTo(db.menufacturer);
-db.invoice.belongsTo(db.vehicles);
-db.invoice_options.belongsTo(db.invoice);
-db.invoice_options.belongsTo(db.options);
+db.invoice.belongsTo(db.salesman);
+db.invoice.belongsTo(db.manufacturer);
+db.invoice.belongsTo(db.vehicle);
+//db.invoice_option.belongsTo(db.invoice);
+db.invoice.belongsToMany(db.option, {through: db.invoice_option});
+db.option.belongsToMany(db.invoice, {through: db.invoice_option});
 
 module.exports = db

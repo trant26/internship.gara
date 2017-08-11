@@ -8,11 +8,14 @@ var PORT = process.env.PORT || 3000;
 
 
 
-var customers = [];
+var customer = [];
 var customerNextId = 1;
 
-var salers = [];
-var salerNextId = 1;
+var salesman = [];
+var salesmanNextId = 1;
+
+var vehicle = [];
+var vehicleNextId = 1;
 
 app.use(bodyParser.json());
 
@@ -33,39 +36,39 @@ app.post('/customer', function(req, res){
 })
 
 
-app.post('/saler', function(req, res){
-    var body= _.pick(req.body, 'saler_name', 'saler_address', 'saler_phone');
+app.post('/salesman', function(req, res){
+    var body= _.pick(req.body, 'salesman_name', 'salesman_address', 'salesman_phone');
 
-    db.saler.create(body).then(function(saler){
-        res.json(saler.toJSON());
+    db.salesman.create(body).then(function(salesman){
+        res.json(salesman.toJSON());
     }, function(e){
         res.status(400).json(e);
     });
 })
 
 
-app.post('/menufacturer', function(req, res){
-    var body= _.pick(req.body, 'menufacturer_name');
+app.post('/manufacturer', function(req, res){
+    var body= _.pick(req.body, 'manufacturer_name');
 
-    db.menufacturer.create(body).then(function(menufacturer){
-        res.json(menufacturer.toJSON());
+    db.manufacturer.create(body).then(function(manufacturer){
+        res.json(manufacturer.toJSON());
     }, function(e){
         res.status(400).json(e);
     });
 })
 
-app.post('/options', function(req, res){
+app.post('/option', function(req, res){
     var body= _.pick(req.body, 'part_name', 'quanity', 'amount_sale');
 
-    db.options.create(body).then(function(options){
-        res.json(options.toJSON());
+    db.option.create(body).then(function(option){
+        res.json(option.toJSON());
     }, function(e){
         res.status(400).json(e);
     });
 })
 
 app.post('/invoice', function(req, res){
-    var body= _.pick(req.body,  'price_sold', 'customerId', 'salerId', 'is_tradein', 'menufacturerId', 'vehicleId');
+    var body= _.pick(req.body,  'price_sold', 'customerId', 'salesmanId', 'is_tradein', 'menufacturerId', 'vehicleId');
 
     db.invoice.create(body).then(function(invoice){
         res.json(invoice.toJSON());
@@ -74,21 +77,21 @@ app.post('/invoice', function(req, res){
     });
 })
 
-app.post('/invoice_options', function(req, res){
+app.post('/invoice_option', function(req, res){
     var body= _.pick(req.body, 'invoiceId', 'optionId');
 
-    db.invoice_options.create(body).then(function(invoice_options){
-        res.json(invoice_options.toJSON());
+    db.invoice_option.create(body).then(function(invoice_option){
+        res.json(invoice_option.toJSON());
     }, function(e){
         res.status(400).json(e);
     });
 })
 
-app.post('/vehicles', function(req, res){
+app.post('/vehicle', function(req, res){
     var body= _.pick(req.body, 'vehicle_name', 'model', 'seria_number', 'year', 'cost', 'amount_sale');
 
-    db.vehicles.create(body).then(function(vehicles){
-        res.json(vehicles.toJSON());
+    db.vehicle.create(body).then(function(vehicle){
+        res.json(vehicle.toJSON());
     }, function(e){
         res.status(400).json(e);
     });
@@ -105,17 +108,15 @@ app.get('/customer', function(req, res){
     });
 });
 
-app.get('/saler', function(req, res){
+app.get('/salesman', function(req, res){
     var query = req.query;
 
-    db.saler.findAll().then(function(saler){
-        res.json(saler);
+    db.salesman.findAll().then(function(salesman){
+        res.json(salesman);
     }, function(e){
         res.status(500).send();
     });
 });
-
-
 
 
 db.sequelize.sync().then(function(){

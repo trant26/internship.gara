@@ -1,22 +1,15 @@
 module.exports = function(sequelize, DataTypes){
-    return sequelize.define('saler', {
+    var Manufacturer = sequelize.define('manufacturer', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
             allowNull: false
        },
-        saler_name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        saler_address: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        saler_phone: {
+        manufacturer_name: {
             type: DataTypes.STRING,
             allowNull: false,
         }
     })
+    return Manufacturer;
 }

@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes){
-    var Invoices = sequelize.define('invoices', {
+    var Invoice = sequelize.define('invoices', {
        id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -16,5 +16,5 @@ module.exports = function(sequelize, DataTypes){
        }
     })
 
-    return Invoices;
+    return Invoice;
 };
