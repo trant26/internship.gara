@@ -13,7 +13,6 @@ var customerNextId = 1;
 
 var salesman = [];
 var salesmanNextId = 1;
-
 var vehicle = [];
 var vehicleNextId = 1;
 
