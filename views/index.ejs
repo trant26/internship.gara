@@ -1,0 +1,39 @@
+<%- include layouts/header.ejs %>
+         
+       
+            <button type="submit" class="btn btn-default" onclick="addVehicle();">+ Add</button>
+            <table class="table table-hover mt-3">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Vehicle_name</th>
+                        <th>Model</th>
+                        <th>Seria_number</th>
+                        <th>Year</th>
+                        <th>Cost</th>
+                        <th>Amount_sale</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% vehicles.forEach(function(vehicle){ %>
+                        <tr>
+                            <th scope="row"><%= vehicle.id %></th>
+                            <td><%= vehicle.vehicle_name %></td>
+                            <td><%= vehicle.model %></td>
+                            <td><%= vehicle.seria_number %></td>
+                            <td><%= vehicle.year %></td>
+                            <td><%= vehicle.cost %></td>
+                            <td><%= vehicle.amount_sale %></td>
+                            <td>
+                                <a class="a-inside edit" href="">Edit</a>
+                                <a class="a-inside delete" href="">Delete</a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>   
+    </div>
+  </body>
+</html>
