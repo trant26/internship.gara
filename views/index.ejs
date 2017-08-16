@@ -26,8 +26,8 @@
                             <td><%= vehicle.cost %></td>
                             <td><%= vehicle.amount_sale %></td>
                             <td>
-                                <a class="a-inside edit" href="">Edit</a>
-                                <a class="a-inside delete" href="">Delete</a>
+                                <a class="a-inside edit" href="./vehicle/edit/<%= vehicle.id %>">Edit</a>
+                                <a class="a-inside delete" href="./delete/<%= vehicle.id %>">Delete</a>
                             </td>
                         </tr>
                     <% }) %>

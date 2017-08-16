@@ -1,37 +1,42 @@
 <%- include layouts/header.ejs %>
 
-    <h3>Add a new vehicle</h3>
-    <form method="post" action="/vehicle/edit/">
+    <h3>Edit vehicle</h3>
+
+    <form method="post" action="/vehicle/<%= vehicle.id %>">
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="vehicle_name" class="col-form-label">Vehicle Name</label>
-                <input type="text" name="vehicle_name" id="vehicle_name" class="form-control" placeholder="Vehicle Name">
+                <input type="text" name="vehicle_name" value="<%= vehicle.vehicle_name %>" id="vehicle_name" class="form-control" placeholder="Vehicle Name">
             </div>
             <div class="form-group col-md-6">
                 <label for="model" class="col-form-label">Model</label>
-                <input type="text" name="model"  class="form-control" id="model" placeholder="Model">
+                <input type="text" name="model" value="<%= vehicle.model %>"  class="form-control" id="model" placeholder="Model">
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="seria_number" class="col-form-label">Seria number</label>
-                <input type="text" name="seria_number"  class="form-control" id="seria_number" placeholder="Serial number">
+                <input type="text" name="seria_number" value="<%= vehicle.seria_number %>"  class="form-control" id="seria_number" placeholder="Serial number">
             </div>
             <div class="form-group col-md-6">
                 <label for="year" class="col-form-label">Year</label>
-                <input type="text" name="year"  class="form-control" id="year" placeholder="Year">
+                <input type="text" name="year" value="<%= vehicle.year %>" class="form-control" id="year" placeholder="Year">
             </div>
         </div>
-         <div class="form-row">
+        <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="cost" class="col-form-label">Cost</label>
-                <input type="text" name="cost"  class="form-control" id="cost" placeholder="Cost">
+                <input type="text" name="cost" value="<%= vehicle.cost %>"  class="form-control" id="cost" placeholder="Cost">
             </div>
             <div class="form-group col-md-6">
                 <label for="amount_sale" class="col-form-label">Amount Sale</label>
-                <input type="text" name="amount_sale"  class="form-control" id="amount_sale" placeholder="Amount Sale">
+                <input type="text" name="amount_sale" value="<%= vehicle.amount_sale %>" class="form-control" id="amount_sale" placeholder="Amount Sale">
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Add</button>
+        <button type="submit" class="btn btn-primary">Save</button>
         <button class="btn btn-danger" onclick="cancelAdd();">Cancel</button>
     </form>
+
+
+   
+    

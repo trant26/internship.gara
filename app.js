@@ -89,14 +89,8 @@ app.post('/invoice_option', function(req, res){
     });
 })
 
-app.post('/vehicle/add', function(req, res){
+app.post('/vehicle', function(req, res){
     var body= _.pick(req.body, 'vehicle_name', 'model', 'seria_number', 'year', 'cost', 'amount_sale');
-
-    // db.vehicle.create(body).then(function(vehicle){
-    //     res.json(vehicle.toJSON());
-    // }).then(function(){
-    //     res.redirect('/');
-    // });
 
    db.vehicle.create({
         vehicle_name : req.body.vehicle_name,
@@ -110,6 +104,24 @@ app.post('/vehicle/add', function(req, res){
        res.redirect('/');
    })
 });
+
+app.post('/vehicle/:id', function(req, res){
+    var body= _.pick(req.body, 'id', 'vehicle_name', 'model', 'seria_number', 'year', 'cost', 'amount_sale');
+    var id = req.params.id;
+
+    db.vehicle.update({
+            vehicle_name : req.body.vehicle_name,
+            model : req.body.model,
+            seria_number : req.body.seria_number,
+            year: req.body.year,
+            cost: req.body.cost, 
+            amount_sale: req.body.amount_sale
+          
+    },{where: {id}}).then(function(vehicle){
+        res.redirect('/');
+    })
+});
+
 
 
 
@@ -137,7 +149,7 @@ app.get('/salesman', function(req, res){
 app.get('/', function(req, res){
     var query = req.query;
 
-    db.vehicle.findAll().then(function(vehicles){
+    db.vehicle.findAll().then(function(vehicles){ 
         res.render('index',{
             title: 'Vehicles',
             vehicles: vehicles
@@ -155,15 +167,50 @@ app.get('/add', function(req, res){
     })
 });
 
+app.get('/vehicle/edit/:id', function(req, res){
+    
+    var editId = parseInt(req.params.id, 10);
+    var matchedId = _.findWhere(vehicle, {id: editId});
+    var body = _.pick(req.body, 'vehicle_name', 'model', 'seria_number', 'year', 'cost', 'amount_sale');
 
-//PUT
+    db.vehicle.findById(editId).then(function(vehicle){
+        if (!!vehicle){
+            res.render('edit_vehicle',{
+                title : 'Edit vehicle',
+                vehicle: vehicle 
+            }) 
+        }
+    })
+}); 
 
-// app.put('/vehicle/edit/:id', function(req, res){
-//     var editId = parseInt(req.param.id, 10);
-//     var matchedId = _.findWhere()
-// })
+app.get('/home', function(req,res){
+    var query = req.query;
 
-db.sequelize.sync().then(function(){
+    db.vehicle.findAll().then(function(vehicles){ 
+        res.render('home',{
+            title: 'Vehicles',
+            vehicles: vehicles
+        });
+    }, function(e){
+        res.status(500).send(); 
+    });
+})
+  
+//DELETE
+
+app.get('/delete/:id', function(req, res){
+    var editId = parseInt(req.params.id, 10);
+    db.vehicle.destroy({
+        where: {
+            id : editId
+        }
+    }).then(function(vehicle){
+        res.redirect('/'); 
+    })
+}) 
+ 
+
+db.sequelize.sync().then(function(){ 
     app.listen(PORT, function(){
         console.log('Express listening on port ' + PORT + '!');
     });
