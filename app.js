@@ -123,14 +123,25 @@ app.post('/add', function(req, res, next){
 
     var errors = req.validationErrors();
     console.log(errors);
+    var current_vehicle = {
+         vehicle_name : req.body.vehicle_name,
+            model : req.body.model,
+            seria_number : req.body.seria_number,
+            year: req.body.year,
+            cost: req.body.cost,
+            amount_sale: req.body.amount_sale
+    }
 
     if (errors){
         req.session.errors = errors;
         req.session.success = false;
+
         res.render('add_vehicle', {
             title: 'Add vehicle',
-            errors
+            errors,
+            current_vehicle
         });
+        console.log(current_vehicle);
     }
     else {
         db.vehicle.create({
@@ -202,10 +213,19 @@ app.get('/', function(req, res){
 app.get('/add', function(req, res){
     var query = req.query;
     var errors = req.validationErrors();
+    var current_vehicle = {
+         vehicle_name : req.body.vehicle_name,
+            model : req.body.model,
+            seria_number : req.body.seria_number,
+            year: req.body.year,
+            cost: req.body.cost,
+            amount_sale: req.body.amount_sale
+    }
 
     res.render('add_vehicle', {
         title:  'Add a new vehicle',
-        errors: errors
+        errors: errors,
+        current_vehicle
     })
 });
 
