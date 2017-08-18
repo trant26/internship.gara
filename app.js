@@ -4,8 +4,13 @@ var bodyParser = require('body-parser');
 var _ = require('underscore');
 var db = require('./db.js');
 var path = require('path');
+//var methodOverride = require('method-override');
+//var validate = require('form-validate');
+var expressValidator = require('express-validator');
+var expressSession = require('express-session');
 
 // var vehicles = require('./routes/vehicle'); 
+//var routes = require('./routes/index');
 var app = express();
 var PORT = process.env.PORT || 3000;
 
@@ -14,6 +19,25 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '/public')));
 
+
+//app.use(validator([]));
+app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.json());
+app.use(expressValidator());
+//app.use(express.methodOverride());
+app.use(expressSession({secret: 'max', saveUninitialized: false, resave: false}));
+
+
+var options = {
+
+};
+//app.use(validate(app, options));
+
+// app.configure('development', function(){
+//     app.use(express.errorHandler());
+// })
+
+
 var customer = [];
 var customerNextId = 1;
 
@@ -21,11 +45,6 @@ var salesman = [];
 var salesmanNextId = 1;
 var vehicle = [];
 var vehicleNextId = 1;
-
-app.use(bodyParser.urlencoded({extended : true}));
-app.use(bodyParser.json());
-
-
 
 app.post('/customer', function(req, res){
     var body= _.pick(req.body,  'customer_name', 'customer_address', 'customer_phone');
@@ -89,20 +108,42 @@ app.post('/invoice_option', function(req, res){
     });
 })
 
-app.post('/vehicle', function(req, res){
-    var body= _.pick(req.body, 'vehicle_name', 'model', 'seria_number', 'year', 'cost', 'amount_sale');
-
-   db.vehicle.create({
-        vehicle_name : req.body.vehicle_name,
-        model : req.body.model,
-        seria_number : req.body.seria_number,
-        year: req.body.year,
-        cost: req.body.cost,
-        amount_sale: req.body.amount_sale
+app.post('/add', function(req, res, next){
     
-   }).then(function(vehicle){
-       res.redirect('/');
-   })
+    //var body= _.pick(req.body, 'vehicle_name', 'model', 'seria_number', 'year', 'cost', 'amount_sale');
+    req.check('vehicle_name', 'Vehicle name is required').notEmpty();
+    req.check('model', 'Model is required').notEmpty();
+    req.check('seria_number', 'Seria number is required').notEmpty();
+    req.check('year', 'Year must be number').isInt();
+    req.check('year', 'Year is required').notEmpty();
+    req.check('cost', 'Cost must be number').isFloat();
+    req.check('cost', 'Cost is required').notEmpty();
+    req.check('amount_sale', 'Amount sale must be number').isFloat();
+    req.check('amount_sale', 'Amount sale is required').notEmpty();
+
+    var errors = req.validationErrors();
+    console.log(errors);
+
+    if (errors){
+        req.session.errors = errors;
+        req.session.success = false;
+        res.render('add_vehicle', {
+            title: 'Add vehicle',
+            errors
+        });
+    }
+    else {
+        db.vehicle.create({
+            vehicle_name : req.body.vehicle_name,
+            model : req.body.model,
+            seria_number : req.body.seria_number,
+            year: req.body.year,
+            cost: req.body.cost,
+            amount_sale: req.body.amount_sale
+        
+        })
+        res.redirect('/');
+    }
 });
 
 app.post('/vehicle/:id', function(req, res){
@@ -121,9 +162,6 @@ app.post('/vehicle/:id', function(req, res){
         res.redirect('/');
     })
 });
-
-
-
 
 //GET
 app.get('/customer', function(req, res){
@@ -152,7 +190,9 @@ app.get('/', function(req, res){
     db.vehicle.findAll().then(function(vehicles){ 
         res.render('index',{
             title: 'Vehicles',
-            vehicles: vehicles
+            vehicles: vehicles,
+            message: ' ',
+            error: {}
         });
     }, function(e){
         res.status(500).send();
@@ -161,9 +201,11 @@ app.get('/', function(req, res){
 
 app.get('/add', function(req, res){
     var query = req.query;
+    var errors = req.validationErrors();
 
     res.render('add_vehicle', {
-        title:  'Add a new vehicle'
+        title:  'Add a new vehicle',
+        errors: errors
     })
 });
 
@@ -194,7 +236,9 @@ app.get('/home', function(req,res){
     }, function(e){
         res.status(500).send(); 
     });
-})
+});
+
+ 
   
 //DELETE
 

@@ -1,0 +1,62 @@
+<%- include layouts/header.ejs %>
+    <div class="bd-example bd-example-tabs">
+        <div class="row">
+            <div class="col-3">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist">
+                <a class="nav-link active" id="vehicle-tab" data-toggle="tab" href="#vehicle" role="tab" aria-controls="v-pills-home" aria-expanded="true">Vehicle</a>
+                <a class="nav-link" id="customer-tab" data-toggle="tab" href="#customer" role="tab" aria-controls="v-pills-profile" aria-expanded="false">Customer</a>
+                <a class="nav-link" id="manufacturer-tab" data-toggle="tab" href="#manufacturer" role="tab" aria-controls="v-pills-messages" aria-expanded="false">Manufacture</a>
+                <a class="nav-link" id="invoices-tab" data-toggle="tab" href="#invoices" role="tab" aria-controls="v-pills-settings" aria-expanded="false">Invoices</a>
+            </div>
+            </div>
+            <div class="col-9">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade active show" id="vehicle" role="tabpanel" aria-labelledby="v-pills-home-tab" aria-expanded="true">
+                     <button type="submit" class="btn btn-default" onclick="addVehicle();">+ Add</button>
+                            <table class="table table-hover mt-3">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Vehicle_name</th>
+                                        <th>Model</th>
+                                        <th>Seria_number</th>
+                                        <th>Year</th>
+                                        <th>Cost</th>
+                                        <th>Amount_sale</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% vehicles.forEach(function(vehicle){ %>
+                                        <tr>
+                                            <th scope="row"><%= vehicle.id %></th>
+                                            <td><%= vehicle.vehicle_name %></td>
+                                            <td><%= vehicle.model %></td>
+                                            <td><%= vehicle.seria_number %></td>
+                                            <td><%= vehicle.year %></td>
+                                            <td><%= vehicle.cost %></td>
+                                            <td><%= vehicle.amount_sale %></td>
+                                            <td>
+                                                <a class="a-inside edit" href="./vehicle/edit/<%= vehicle.id %>">Edit</a>
+                                                <a class="a-inside delete" href="./delete/<%= vehicle.id %>">Delete</a>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>   
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="customer" role="tabpanel" aria-labelledby="v-pills-profile-tab" aria-expanded="false">
+                <p>Culpa dolor voluptate do laboris laboris irure reprehenderit id incididunt duis pariatur mollit aute magna pariatur consectetur. Eu veniam duis non ut dolor deserunt commodo et minim in quis laboris ipsum velit id veniam. Quis ut consectetur adipisicing officia excepteur non sit. Ut et elit aliquip labore Lorem enim eu. Ullamco mollit occaecat dolore ipsum id officia mollit qui esse anim eiusmod do sint minim consectetur qui.</p>
+                </div>
+                <div class="tab-pane fade" id="manufacturer" role="tabpanel" aria-labelledby="v-pills-messages-tab" aria-expanded="false">
+                <p>Fugiat id quis dolor culpa eiusmod anim velit excepteur proident dolor aute qui magna. Ad proident laboris ullamco esse anim Lorem Lorem veniam quis Lorem irure occaecat velit nostrud magna nulla. Velit et et proident Lorem do ea tempor officia dolor. Reprehenderit Lorem aliquip labore est magna commodo est ea veniam consectetur.</p>
+                </div>
+                <div class="tab-pane fade" id="invoices" role="tabpanel" aria-labelledby="v-pills-settings-tab" aria-expanded="false">
+                <p>Eu dolore ea ullamco dolore Lorem id cupidatat excepteur reprehenderit consectetur elit id dolor proident in cupidatat officia. Voluptate excepteur commodo labore nisi cillum duis aliqua do. Aliqua amet qui mollit consectetur nulla mollit velit aliqua veniam nisi id do Lorem deserunt amet. Culpa ullamco sit adipisicing labore officia magna elit nisi in aute tempor commodo eiusmod.</p>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>

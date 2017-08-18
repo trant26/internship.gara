@@ -20,15 +20,20 @@ module.exports = function(sequelize, DataTypes){
         },
         year: {
             type: DataTypes.DATEONLY,
-            allowNull: true
+            allowNull: true,
+            validate: {
+                isDate: true
+            }
         },
         cost: {
             type: DataTypes.FLOAT,
             allowNull: false,
+            isNumeric: true
         },
         amount_sale: {
             type: DataTypes.FLOAT,
-            allowNull: false
+            allowNull: false,
+            isNumeric: true
         }
     })
     return Vehicle;
