@@ -9,8 +9,6 @@ var path = require('path');
 var expressValidator = require('express-validator');
 var expressSession = require('express-session');
 
-// var vehicles = require('./routes/vehicle'); 
-//var routes = require('./routes/index');
 var app = express();
 var PORT = process.env.PORT || 3000;
 
@@ -20,22 +18,11 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '/public')));
 
 
-//app.use(validator([]));
+
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 app.use(expressValidator());
-//app.use(express.methodOverride());
 app.use(expressSession({secret: 'max', saveUninitialized: false, resave: false}));
-
-
-var options = {
-
-};
-//app.use(validate(app, options));
-
-// app.configure('development', function(){
-//     app.use(express.errorHandler());
-// })
 
 
 var customer = [];
@@ -122,7 +109,7 @@ app.post('/add', function(req, res, next){
     req.check('amount_sale', 'Amount sale is required').notEmpty();
 
     var errors = req.validationErrors();
-    console.log(errors);
+
     var current_vehicle = {
          vehicle_name : req.body.vehicle_name,
             model : req.body.model,
@@ -249,9 +236,9 @@ app.get('/home', function(req,res){
     var query = req.query;
 
     db.vehicle.findAll().then(function(vehicles){ 
-        res.render('home',{
-            title: 'Vehicles',
-            vehicles: vehicles
+        res.render('Home',{
+            title: 'Welcome',
+            
         });
     }, function(e){
         res.status(500).send(); 
